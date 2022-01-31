@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}
+- Add Image
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div >
+      <div class="row mt-5 mb-5">
+        <div class="col">
+          <br> <br> <br>
+          {% if error %}
+           <h3>{{error}}  </h3>
+           {% endif %} <br><br>
+          <h5>{%if type == 'update'%}Update{% else %}Add{% endif %} Image</h5>
+          <form class="mt-3" method="POST">
+            {% from "_formhelper.html" import render_field %}
+            {{ form.csrf_token }}
+            <div class="row">
+                {% if type == 'update' %}
+                <div class="col">
+                    <div class="form-group">
+                        <label for="source">Source</label>
+                        {{ render_field(form.source, class="form-control", placeholder="Source",id="source", value=image.source) }}
+                    </div>
+                    <div class="form-group">
+                        <label for="height">Height</label>
+                        {{ render_field(form.height, class="form-control", placeholder="Height",id="height",type="number", min = "0",value=image.height) }}
+                    </div>
+                    <div class="form-group">
+                        <label for="width">Width</label>
+                        {{ render_field(form.width, class="form-control", placeholder="Width",id="width",type="number", min = "0", value=image.width) }}
+                    </div>
+                    <div class="form-group">
+                        <label for="alt">Alt</label>
+                        {{ render_field(form.alt,class="form-control",placeholder="Alt",id="alt", value=image.alt) }}
+                    </div>
+                </div>
+                {% else %}
+                <div class="col">
+                    <div class="form-group">
+                        <label for="source">Source</label>
+                        {{ render_field(form.source, class="form-control", placeholder="Source",id="source") }}
+                    </div>
+                    <div class="form-group">
+                        <label for="height">Height</label>
+                        {{ render_field(form.height, class="form-control", placeholder="Height",id="height",type="number", min = "0") }}
+                    </div>
+                    <div class="form-group">
+                        <label for="width">Width</label>
+                        {{ render_field(form.width, class="form-control", placeholder="Width",id="width",type="number", min = "0") }}
+                    </div>
+                    <div class="form-group">
+                        <label for="alt">Alt</label>
+                        {{ render_field(form.alt,class="form-control",placeholder="Alt",id="alt") }}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            {% for msg in messages %}
+                <h2 style="color:red; margin-bottom: 10px;">{{ msg }}</h2>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">
+                {%if type == 'update'%}Update{% else %}Add{% endif %} Image
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

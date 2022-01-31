@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}
+Events
+{% endblock %}
+
+{% block body %}
+    {% if current_user.getRole() == 'admin' %}
+        <div class="container pt-2">
+            <div class="d-flex flex-row-reverse">
+                <a href="{{url_for('addEvent')}}">
+                    <button type="button" class="btn btn-warning">Add Event</button>
+                </a> 
+            </div>
+        </div>
+    {% endif %}
+    
+    {% for event in events %}
+        <div class="container p-5 my-5 border">
+            <div class="row">
+                <div class="col">
+                    <img src='{{event.image.source}}' height="{{event.image.height if (event.image.height < 180) else 180}}" width="{{event.image.width if (event.image.height < 320) else 320}}" alt="{{event.image.alt}}" 
+                    style="display: block;margin-left: auto;margin-right: auto;">
+                </div>
+                <div class="col">
+                    <div class="d-flex justify-content-center">
+                        <h6>{{event.title}}</h6>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <p>Date: {{event.start_date}}</p>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <p>Venue: {{event.venue.name}}</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="col p-2">
+                        <div class="d-flex justify-content-center">
+                            <a href="{{url_for('event', eventid=event.id)}}">
+                                <button type="button" class="btn btn-primary">Details</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

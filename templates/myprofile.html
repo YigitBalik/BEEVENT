@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}
+My Profile
+{% endblock %}
+
+
+{% block body %}
+<div class="container p-5 my-5 border">
+    <table class="table table-hover">
+        <thead>
+            <th>My Informations</th>
+        </thead>
+        <tbody>
+            <tr>
+                <th>Username</th>
+                <td>{{user.username}}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{user.email}}</td>
+            </tr>
+            <tr>
+                <th>Password</th>
+                <td>**********</td>
+            </tr>
+            <tr>
+                <th>Country</th>
+                <td>{{user.country}}</td>
+            </tr>
+            <tr>
+                <th>Age</th>
+                <td>{{user.age}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="{{url_for('editUserProfile')}}">
+        <button type="button" class="btn btn-primary">Edit Informations</button>
+    </a>
+    <a href="{{url_for('changePassword')}}">
+        <button type="button" class="btn btn-warning">Change Password</button>
+    </a>
+</div>
+
+{% endblock %}

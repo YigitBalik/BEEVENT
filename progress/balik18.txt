@@ -1,0 +1,41 @@
+25.10.2021
+	fetch.py is created to fetch necessary data from the API
+	initDB.py is created to initialize DB (create tables and insert data from API)
+28.10.2021
+	models.py created
+	rendered names of events using flask
+30.10.2021
+	Login page with flask forms
+31.10.2021
+	CRUD for events and images
+	Event details page
+----------------------------------------------------------------------------------
+1.11.2021
+	CRUD for venues
+	User register controller
+	User register form
+	Register page
+	Admins are initialized in database
+	Login fuctionality and session values are added
+3.11.2021
+	Conditional rendring (admin operations for deleting an event)
+----------------------------------------------------------------------------------
+10.11.2021
+	Event form
+	Add event from frontend
+----------------------------------------------------------------------------------
+21.11.2021
+	CRUD fuctionality for Images from the frontend (admins only)
+----------------------------------------------------------------------------------
+23.11.2021
+	CRUD fuctionality for Venues from the frontend (admins only)
+24.11.2021
+	Update functionality for Events from the frontend (admins only)
+25.11.2021
+	Object model of user_events table is created
+	Users can add events that they will attend to their lists (user_events table) 
+26.11.2021
+	Rendered users events
+	created empty evaluation for each user event
+27.11.2021
+	File upload method for adding venue(s)

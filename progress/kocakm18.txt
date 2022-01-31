@@ -1,0 +1,44 @@
+31.10.2021
+User, Evaluation, and Statistic objects are created at models.py
+----------------------------------------------------------------
+6.11.2021
+Create functionality for User at Register page
+Name of the id attributes of User, UserStatistics and UserEvaluations are changed according to their names to avoid confusion
+----------------------------------------------------------------
+12.11.2021
+Page named as "myprofile" which provides users seeing their info is constructed
+----------------------------------------------------------------
+22.11.2021
+Update informations and password functionality from frontend for User is provided at seperated pages
+----------------------------------------------------------------
+02.12.2021
+Add Evaluation functionality of User for User's Event is added
+----------------------------------------------------------------
+03.12.2021
+Add Evaluation functionality is converted from CREATE to UPDATE since the Evaluation is created in Evaluations table when UserEvent is created
+----------------------------------------------------------------
+04.12.2021
+List Evaluations functionality for Event is provided
+----------------------------------------------------------------
+11.12.2021
+Delete Evaluation functionality for Event by User is provided
+----------------------------------------------------------------
+22.12.2021
+My Favorite List page is constructed, create favorite list button is provided, form to enter details of favorite list is provided
+----------------------------------------------------------------
+22.12.2021
+Create and read functionality for a user's favorite list is provided
+Add an event to user's favorite list (Create Favorite Event) functionality is provided
+Get favorite events in user's favorite list (Read Favorite Event) functionality is provided
+----------------------------------------------------------------
+23.12.2021
+Delete an event from favorite list(Delete Favorite Event) functionality is provided at Event page and FavoriteEvents page
+Update functionality for Favorite List is provided
+Delete functionality for Favorite List is provided
+See all public Favorite Lists functionality is provided, user can remove only own favorite events
+----------------------------------------------------------------
+28.12.2021
+Page and button for Update Evaluation is provided
+----------------------------------------------------------------
+04.01.2022
+Small stylistic editings were done at front-end

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}
+My Profile
+{% endblock %}
+
+
+{% block body %}
+<div class="container p-5 my-5 border">
+    {% if favoriteEvents %}
+    <table class="table table-hover">
+        <tbody>
+            <tr>
+                <th>Title</th>
+                <th>Genre</th>
+                <th>Category</th>
+            </tr>
+            {% for event in favoriteEvents %}
+            <tr>
+                <td>{{event.title}}</td>
+                <td>{{event.genre}}</td>
+                <td>{{event.category}}</td>
+                {% if isMyList %}
+                <td>
+                    <form action="{{url_for('deleteEventFromFavoriteEventsInList',eventid=event.id)}}" method="post">
+                        <button type="submit" class="btn btn-primary">Remove</button>
+                    </form>
+                </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="d-flex justify-content-center">
+        <p>There is not any event in this favorite list</p>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

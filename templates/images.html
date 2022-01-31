@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}
+Images
+{% endblock %}
+
+{% block body %}
+    <div class="container pt-2">
+        <div class="d-flex flex-row-reverse">
+            <a href="{{url_for('addImage')}}">
+                <button type="button" class="btn btn-warning">Add Image</button>
+            </a> 
+        </div>
+    </div>
+    {% for image in images %}
+    <div class="container p-5 my-5 border">
+        <div class="row">
+            <div class="col">
+                <img src='{{image.source}}' height="180" width="320" alt="{{image.alt}}" >
+            </div>
+            <div class="col">
+                <div class="d-flex justify-content-center">
+                    <h6>{{image.alt}}</h6>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <p>Height: {{image.height}}</p>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <p>Width: {{image.width}}</p>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <p>Ratio: {{image.ratio}}</p>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <p><a href="{{image.source}}">Go to source</a></p>
+                </div>
+            </div>
+            <div class="col">
+                <div class="col p-2">
+                    <div class="d-flex justify-content-center">
+                        <a href="{{url_for('updateImage',imageid = image.id)}}">
+                            <button type="button" class="btn btn-primary">Update</button>
+                        </a>
+                    </div>
+                </div>
+                {% if image.id != 1%}
+                <div class="col p-2">
+                    <div class="d-flex justify-content-center">
+                        <a href="{{url_for('deleteImage',imageid=image.id)}}">
+                            <button type="button" class="btn btn-danger">Delete</button>
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}
+Images
+{% endblock %}
+
+{% block body %}
+    {% for user in users %}
+    <div class="container p-5 my-5 border">
+        <div class="row">
+            <div class="col">
+                <h6>{{user.username}}</h6>
+            </div>
+            <div class="col">
+                <div class="d-flex justify-content-center">
+                    <p>Email: {{user.email}}</p>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <p>Country: {{user.country}}</p>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <p>Age: {{user.age}}</p>
+                </div>
+                <div class="d-flex justify-content-center">
+                    {% if user.role == 0 %}
+                    <p>Role: Requested to be an admin</p>
+                    {% elif user.role == 1%}
+                    <p>Role: user</p>
+                    {% elif user.role == 2 %}
+                    <p>Role: admin</p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col">
+                {% if user.role == 0 %}
+                <div class="col p-2">
+                    <div class="d-flex justify-content-center">
+                        <form action="{{url_for('assignRole', userid = user.id, role=2)}}" method="post">
+                            <button type="submit" class="btn btn-primary">Assign Admin</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col p-2">
+                    <div class="d-flex justify-content-center">
+                        <form action="{{url_for('assignRole', userid = user.id, role=1)}}" method="post">
+                            <button type="submit" class="btn btn-warning">Assign User</button>
+                        </form>
+                    </div>
+                </div>
+                {% endif %}
+                <div class="col p-2">
+                    <div class="d-flex justify-content-center">
+                        <a href="{{url_for('deleteUser', userid=user.id)}}">
+                            <button type="button" class="btn btn-danger">Delete Account</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+{% endblock %}

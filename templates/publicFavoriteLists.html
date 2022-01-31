@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}
+Public Favorite Lists
+{% endblock %}
+
+
+{% block body %}
+<div class="container p-5 my-5 border">
+    {% if publicFavoriteLists %}
+    <table class="table table-hover">
+        <tbody>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Creation Time</th>
+                <th>Last Update Time</th>
+            </tr>
+            {% for favoriteList in publicFavoriteLists %}
+            <tr>
+                <td>{{favoriteList.listName}}</td>
+                <td>{{favoriteList.description}}</td>
+                <td>{{favoriteList.creationTime}}</td>
+                <td>{{favoriteList.updatedTime}}</td>
+                <td>
+                    <a href="{{url_for('getFavoriteEvents', favoriteListID = favoriteList.id)}}">
+                        <button type="button" class="btn btn-primary">See Events</button>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="d-flex justify-content-center">
+        <p>There is not any public favorite list</p>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

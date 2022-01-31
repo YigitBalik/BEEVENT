@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}
+My Favorites
+{% endblock %}
+
+
+{% block body %}
+<div class="container p-5 my-5 border">
+    {% if favoriteList %}
+    <table class="table table-hover">
+        <thead>
+            <p>YOUR FAVORITE LIST</p>
+        </thead>
+        <tbody>
+            <tr>
+                <th>Name</th>
+                <td>{{favoriteList.listName}}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{favoriteList.description}}</td>
+            </tr>
+            <tr>
+                <th>Creation Time</th>
+                <td>{{favoriteList.creationTime}}</td>
+            </tr>
+            {% if favoriteList.updatedTime %}
+            <tr>
+                <th>Updated Time</th>
+                <td>{{favoriteList.updatedTime}}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <th>Visibility</th>
+                <td>{{favoriteList.isPublic}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <form action="{{url_for('deleteFavoriteList', favoriteListID = favoriteList.id)}}" method="post">
+        <button type="submit" class="btn btn-secondary">Delete Favorite List</button>
+    </form>
+    <a href="{{url_for('updateFavoriteList')}}">
+        <button type="button" class="btn btn-danger">Update Favorite List</button>
+    </a>
+    <div class="d-flex justify-content-center">
+        <a href="{{url_for('getFavoriteEvents', favoriteListID = favoriteList.id)}}">
+            <button type="button" class="btn btn-primary">See Events</button>
+        </a>
+    </div>
+    {% else %}
+    <a href="{{url_for('createFavoriteList')}}">
+        <button type="button" class="btn btn-secondary">Create Favorite List</button>
+    </a>
+    {% endif %}
+</div>
+
+{% endblock %}

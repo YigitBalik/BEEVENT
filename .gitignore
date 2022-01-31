@@ -1,0 +1,7 @@
+dbenv/
+venv/
+__pycache__/ 
+.vs/
+CREDENTIALS.py
+Uploads/
+

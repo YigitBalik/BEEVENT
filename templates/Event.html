@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+
+{% block title %}
+| {{event.title}}
+{% endblock %}
+
+{% block body %}
+<div class="modal fade" id="imageDetailsModal" tabindex="-1" aria-labelledby="imageDetailsModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageDetailsModalLabel">Image Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Ratio: {{image.ratio}} <br>
+                    Height: {{image.height}} <br>
+                    Width: {{image.width}} <br>
+                    Alternate Text: {{image.alt}} <br>
+                    Source: <a href="{{image.source}}">Ticketmaster</a>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+            </div>
+        </div>
+    </div>
+</div>
+{% if current_user.getRole() == 'admin' %}
+<div class="modal fade" id="eventDeleteModal" tabindex="-1" aria-labelledby="eventDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eventDeleteModalLabel">Delete Event</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h6>Are you sure?</h6>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a href="{{url_for('deleteEvent',eventid=event.id)}}">
+                    <button type="button" class="btn btn-primary">Delete Event</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+<div class="container">
+    <div class="container p-5 my-5 border">
+        <div class="row">
+            <div class="col">
+                <div class="container d-flex justify-content-center">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#imageDetailsModal">
+                        <img src='{{image.source}}' height="{{image.height}}" width="{{image.width }}"
+                            alt="{{event.image.alt}}" class="img-fluid">
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center">
+            <div class="row">
+                <div class="row">
+                    <h1>{{event.title}}</h1>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="row">
+                            <i class="bi bi-calendar-date-fill"> Date: {{event.start_date}}</i> <br>
+                            <i class="bi bi-clock-fill"> Time: {% if event.no_start_time %}
+                                TBA
+                                {% else %}
+                                {{event.start_time}}
+                                {% endif %}
+                            </i><br>
+                            <i class="bi bi-pin-map-fill"> Venue: {{venue.name}}</i> <br>
+                            <p>{{venue.address}}, {{venue.city}}, {{venue.country}} <br>{{venue.timezone}}</p>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <p>
+                            Category: {{event.category}}<br>
+                            Genre: {{event.genre}} <br>
+                            Status: {{event.status}}
+                        </p>
+                    </div>
+                    <div class="col">
+                        <div class="row p-2">
+                            <div class="d-flex justify-content-center">
+                                {% if buyed %}
+                                <p>You buyed ticked for this event</p>
+                                {% else %}
+                                <form action="{{url_for('addUserEvent', eventid=event.id)}}" method="post">
+                                    <button type="submit" class="btn btn-success">
+                                        Buy: {{event.price}}$
+                                    </button>
+                                </form>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% if current_user.getRole() == 'admin' %}
+                        <div class="row p-2">
+                            <div class="d-flex justify-content-center">
+                                <a href="{{url_for('updateEvent',eventid = event.id)}}">
+                                    <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                                        data-bs-target="#eventEditModal">
+                                        Edit Event
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row p-2">
+                            <div class="d-flex justify-content-center">
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                    data-bs-target="#eventDeleteModal">
+                                    Delete Event
+                                </button>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% if favoritelistidCurrentUser %}
+                        <div class="row p-2">
+                            <div class="d-flex justify-content-center">
+                                {% if not eventInFavoriteList %}
+                                <form
+                                    action="{{url_for('addEventToFavoriteEvents',favoriteListID = favoritelistidCurrentUser, eventid=event.id)}}"
+                                    method="post">
+                                    <button type="submit" class="btn btn-primary">Add Event to Favorites</button>
+                                </form>
+                                {% else %}
+                                <form
+                                    action="{{url_for('deleteEventFromFavoriteEvents',favoriteListID = favoritelistidCurrentUser,eventid=event.id)}}"
+                                    method="post">
+                                    <button type="submit" class="btn btn-primary">Remove Event From Favorites</button>
+                                </form>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container p-5 my-5 border">
+        <h1>Evaluations</h1>
+        {% for evaluation in evaluations %}
+        {% if evaluation.comment %}
+        <div class="container p-5 my-5 border">
+            <div class="row">
+                <div class="d-flex justify-content-center">
+                    <p>Price Rate: {% for i in range(0, evaluation.priceRate)%} <i class="bi bi-star-fill"></i>
+                        {%endfor%} {% for i in range(0, 5-evaluation.priceRate)%} <i class="bi bi-star"></i> {%endfor%}
+                    </p>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <p>Fun Rate: {% for i in range(0, evaluation.funRate)%} <i class="bi bi-star-fill"></i>
+                        {%endfor%} {% for i in range(0, 5-evaluation.funRate)%} <i class="bi bi-star"></i> {%endfor%}
+                    </p>
+                </div>
+                <div class="d-flex justify-content-center evaluationComment">
+                    <h6>{{evaluation.comment}}</h6>
+                </div>
+                {% if evaluationidCurrentUser == evaluation.id %}
+                <div class="modal-footer">
+                    <form action="{{url_for('deleteEvaluation',eventid=event.id, evaluationid = evaluation.id)}}"
+                        method="post">
+                        <button type="submit" class="btn btn-primary">Delete Evaluation</button>
+                    </form>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock %}

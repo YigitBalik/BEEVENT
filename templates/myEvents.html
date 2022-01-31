@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}
+My Events
+{% endblock %}
+
+{% block body %}
+{% for uevent in events %}
+<div class="container p-5 my-5 border">
+    <div class="row">
+        <div class="col">
+            <div class="d-flex justify-content-center">
+                <h6>{{uevent.event.title}}</h6>
+            </div>
+            <div class="d-flex justify-content-center">
+                <p>Date: {{uevent.event.start_date}}</p>
+            </div>
+            <div class="d-flex justify-content-center">
+                <p>Paid: {{uevent.event.price}}$</p>
+            </div>
+        </div>
+        <div class="col">
+            <div class="col p-2">
+                <div class="d-flex justify-content-center">
+                    <a href="{{url_for('event', eventid=uevent.event.id)}}">
+                        <button type="button" class="btn btn-primary">Details</button>
+                    </a>
+                </div>
+            </div>
+            <div class="col p-2">
+                {%if uevent.evaluation.isCheckedIn%}
+                {%if uevent.evaluation.timestamp%}
+                <div class="d-flex justify-content-center">
+                    <a
+                        href="{{url_for('updateEvaluation',  eventid=uevent.event.id, evaluationid=uevent.evaluation.id)}}">
+                        <button type="button" class="btn btn-primary">Update Evaluation</button>
+                    </a>
+                </div>
+                {%else%}
+                <div class="d-flex justify-content-center">
+                    <a href="{{url_for('addEvaluation', eventid=uevent.event.id)}}">
+                        <button type="button" class="btn btn-primary">Evaluate</button>
+                    </a>
+                </div>
+                {%endif%}
+                {%endif%}
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

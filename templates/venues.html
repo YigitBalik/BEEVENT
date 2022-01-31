@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}
+Venues
+{% endblock %}
+
+{% block body %}
+    <div class="container pt-2">
+        <div class="d-flex flex-row-reverse">
+            <a href="{{url_for('addVenue')}}">
+                <button type="button" class="btn btn-warning">Add Venue</button>
+            </a> 
+        </div>
+    </div>
+    {% for venue in venues %}
+    <div class="container p-5 my-5 border">
+        <div class="row">
+            <div class="col">
+                <div class="d-flex justify-content-center">
+                    <h6>{{venue.name}}</h6>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <p>City: {{venue.city}}</p>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <p>Country: {{venue.country}}</p>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <p>Address: {{venue.address}}</p>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <p>Timezone: {{venue.timezone}}</p>
+                </div>
+            </div>
+            <div class="col">
+                <div class="col p-2">
+                    <div class="d-flex justify-content-center">
+                        <a href="{{url_for('updateVenue', venueid=venue.id)}}">
+                            <button type="button" class="btn btn-primary">Update</button>
+                        </a>
+                    </div>
+                </div>
+                <div class="col p-2">
+                    <div class="d-flex justify-content-center">
+                        <a href="{{url_for('deleteVenue', venueid=venue.id)}}">
+                            <button type="button" class="btn btn-danger">Delete</button>
+                        </a>
+                    </div>
+                </div>
+                <div class="col p-2">
+                    <div class="d-flex justify-content-center">
+                        <p>
+                            If there is an event planned here, this venue cannot be deleted! <br>
+                            Please make necessary changes on the event then delete the venue.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+{% endblock %}
